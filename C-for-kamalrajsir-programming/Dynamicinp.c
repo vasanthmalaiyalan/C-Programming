@@ -5,7 +5,7 @@ int main()
     float y;
     char ch;
     printf("Enter a char :");
-    scanf(" %c",&ch);
+    scanf("%c",&ch);
     printf("\nEnter int value :");
     scanf("%d",&x);
     printf("\nEnter a float value :");
