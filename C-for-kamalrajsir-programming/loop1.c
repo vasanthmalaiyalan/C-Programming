@@ -8,6 +8,6 @@ int main()
     //entry condition verfication
     while(0)
     {
-        printf("Iam from while");
+        printf("\nIam from while");
     }
 }

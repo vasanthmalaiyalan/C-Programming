@@ -11,13 +11,13 @@ int main()
     switch(choice)
     {
         case '+':
-             printf("Add x & y = %d",x+y);
+             printf("Add x & y = %d\n",x+y);
              break;
         case '-':
-             printf("Diff x & y = %d",x-y);
+             printf("Diff x & y = %d\n",x-y);
              break;
         default:
-              printf("Error: choice can be x or y");
+              printf("Error: choice can be x or y\n");
               break;     
     }
 }
