@@ -6,7 +6,9 @@
 #include<stdio.h>
 int main()
 {
-    int a=2,b=4;
+    int a,b;
+    printf("Enter value how works operators,&&,||,!(a,b): ");
+    scanf("%d %d",&a,&b);
     printf("a&&b = %d\n",a&&b);
     printf("a || b = %d\n",a||b);
     printf("!(a<b) = %d\n",!(a<b));
