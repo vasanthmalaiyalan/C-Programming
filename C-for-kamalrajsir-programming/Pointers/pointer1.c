@@ -5,8 +5,8 @@ int main()
     int *ptr;
     ptr = &a;
     printf("Data in *ptr is %d\n",*ptr);
-    printf("Address of a like &a: %p\n",&a);
-    printf("Address of a using ptr: %p\n",ptr);
+    printf("Address of a like &a: %p\n",(void*)&a); //only print standard use only (void*) ok
+    printf("Address of a using ptr: %p\n",(void*)ptr);
     printf("Data a : %d",a);
     *ptr = *ptr *20;
     printf("\nthe value of a = %d",a);
