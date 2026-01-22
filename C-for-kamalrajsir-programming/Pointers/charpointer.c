@@ -7,7 +7,7 @@ int main()
     ptr = c;
     for(i=0;i<7;i++)
     {
-        printf("%c char in %p \n",*ptr,ptr);
+        printf("%c char in %p \n",*ptr,ptr);//*ptr is pointer only print in value and ptr is address so prrintin address
         ptr = ptr + 1;
     }    
 }

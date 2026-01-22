@@ -1,7 +1,5 @@
 #include<stdio.h>
-struct Point{
-    int x,y
-};
+struct Point{int x,y};
 int main()
 {
     struct Point p[3];
