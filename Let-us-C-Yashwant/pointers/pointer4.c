@@ -8,7 +8,7 @@ int main()
     printf("value of i = %d\n",i);
     printf("value of j = %f\n",j);
     printf("value of k = %c\n",k);
-    x=&i;
+    x=&i; //Address-ஐ store செய்ய வேண்டுமென்றால் pointer variable தான் வேண்டும்.
     y=&j;
     z=&k;
     printf("original address of x = %p\n",x);
