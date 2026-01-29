@@ -9,16 +9,12 @@ int main()
         {1345,56}
     };
     int i,j;
-
     for(i=0;i<=3;i++)
     {
         printf("\n");
         for(j=0;j<=1;j++)
-           printf("%d\n",*(*(s+i)+j));
-           printf("address of first row s = %p and &s[0][0] = %p\n",s,&s[0][0]);
-           printf("address of second row %p\n",s+1);
-           printf("*s = %p\n",*s);
-           printf("**s = %d\n", **s);  
+           printf("%d\n",*(*(s+i)+j));//*(*(&s[i])+j)
+           printf("size of s = %lu *s = %lu and s[0] = %lu *(*s) = %lu\n",sizeof(s),sizeof(*s),sizeof(s[0]),sizeof(*(*s)));  
     }
 }
 
