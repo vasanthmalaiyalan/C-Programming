@@ -14,7 +14,7 @@ int main()
     for(i=0;i<=3;i++)
     {
         p = &s[i];
-        pint = p;
+        pint = *p;
         printf("\n");
         for(j=0;j<=1;j++)
             printf("%d ",*(pint+j));// like *(s[o]+0) => 
