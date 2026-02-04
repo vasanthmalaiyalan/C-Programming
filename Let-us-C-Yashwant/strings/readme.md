@@ -222,3 +222,123 @@ Array name itself = base address
 🔥 One-line takeaway
 
 %s makes string handling simple by automatically working till the null character ('\0').
+
+
+ஆமாம், *t = '\0'; கண்டிப்பா போடணும் ✅
+(இந்த மாதிரி string copy function-ல)
+
+இப்ப ஏன் அவசியம்ன்னு உள்ளே என்ன நடக்குதுன்னு very clear-ஆ explain பண்ணுறேன் 👇
+
+1️⃣ String-ன் அடையாளமே '\0'
+
+C-ல:
+
+String என்றால் = characters + last-ல '\0'
+
+[h][e][l][l][o][\0]   // ✅ string
+[h][e][l][l][o]       // ❌ string இல்லை
+
+
+👉 '\0' இல்லாதா:
+
+%sக்கு string எங்க முடிகிறது தெரியாது
+
+print loop எங்க நிறுத்துவது தெரியாது
+
+2️⃣ Copy loop என்ன செய்கிறது?
+while (*s != '\0')
+{
+    *t = *s;
+    s++;
+    t++;
+}
+
+
+👉 இந்த loop:
+
+characters மட்டும் copy பண்ணுது
+
+'\0' copy பண்ணவே இல்ல ❌
+(ஏன்னா *s != '\0' condition)
+
+அதனால் loop முடிந்தப்புறம்:
+
+target : [h][e][l][l][o][ ? ][ ? ]...
+
+
+👉 இப்ப target string கிடையாது
+
+3️⃣ அதனால்தான் இந்த line தேவை 🔥
+*t = '\0';
+
+
+👉 இது:
+
+string-க்கு end mark போடுது
+
+target-ஐ proper string ஆக மாற்றுது
+
+Result:
+
+target : [h][e][l][l][o][\0]
+
+4️⃣ *t = '\0'; போடலன்னா என்ன ஆகும்?
+❌ Without it:
+printf("%s", target);
+
+
+👉 %s:
+
+target[0] → h
+
+target[1] → e
+
+...
+
+\0 கிடைக்காத வரை print பண்ணும்
+
+garbage memory-ல போய்
+
+crash / weird output
+
+Example output:
+
+hello����@��
+
+
+👉 Undefined Behavior 💣
+
+5️⃣ Small experiment (mentally)
+char target[10];
+
+
+Before:
+
+[?][?][?][?][?][?][?][?][?][?]
+
+
+After copy without \0:
+
+[h][e][l][l][o][?][?][?][?][?]
+
+
+%sக்கு stop sign இல்ல
+
+🔑 Golden rule (LOCK THIS 🔥)
+
+Every string operation MUST ensure '\0' at the end.
+
+6️⃣ When is *t = '\0' NOT needed?
+
+👉 Library strcpy use பண்ணும்போது
+ஏன்னா அது internally இதையே பண்ணும்
+
+But custom xstrcpy எழுதும்போது → MUST
+
+🧾 Exam-ready one line
+
+The statement *t = '\0'; is necessary to terminate the destination string properly; without it, the result is not a valid string.
+
+🔥 Final confidence answer
+
+ஆமாம், *t = '\0'; கட்டாயம்; இல்லையென்றால் target string அல்ல, garbage data collection தான்.
