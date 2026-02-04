@@ -6,7 +6,7 @@ int main(void)//no argument return means void and funct return value acceptable 
     char arr[]="jarvis";
     int len1,len2;
     len1=xstrlen(arr);
-    len2=xstrlen("iron man");
+    len2=xstrlen("iron man");//&"iron man"[0] = 'i' and this type of value means literal value read only value by default
 
     printf("string=%s length=%d\n",arr,len1);
     printf("string=%s length=%d\n","iron man",len2);

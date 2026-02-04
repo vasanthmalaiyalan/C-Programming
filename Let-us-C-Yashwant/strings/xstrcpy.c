@@ -19,7 +19,7 @@ void xstrcpy(char *t ,char *s)// sums type of function only return value int use
         s++;
         t++;
     }
-    *t='\0';// use '\0' means %s understand this is string so you didn't '\0' use, %s extra garpage value add and crash
+    *t='\0';// use '\0' means %s understand this is string so you didn't '\0' use, %s extra garpage value add and crash , The statement *t = '\0'; is necessary to terminate the destination string properly; without it, the result is not a valid string.
 }
 
 /*
