@@ -342,3 +342,251 @@ The statement *t = '\0'; is necessary to terminate the destination string proper
 🔥 Final confidence answer
 
 ஆமாம், *t = '\0'; கட்டாயம்; இல்லையென்றால் target string அல்ல, garbage data collection தான்.
+
+==============x=================x================x===============
+
+அருமை 👍
+stack / heap – இந்த இரண்டு வார்த்தைகள் C-யை “உண்மையிலேயே” புரிஞ்சுக்க முக்கியமான அடிப்படை.
+எந்த முன் அறிவும் இல்லாம புரியுற மாதிரி, தமிழ் பெயர் + உதாரணம் + நினைவில் நிற்கும் analogy உடன் explain பண்றேன்.
+
+முதலில்: Program memory என்றால் என்ன?
+
+ஒரு C program run ஆகும்போது, OS அந்த program-க்கு memory கொடுக்குது.
+அந்த memory-யை வித்தியாசமான பகுதிகளாக பிரித்து use பண்ணும்.
+
+இப்போ நாம் focus பண்ணுறது:
+👉 Stack
+👉 Heap
+
+🟦 STACK (ஸ்டாக்)
+📌 தமிழ் விளக்கம்
+
+Stack = அடுக்கி வைத்த இடம் / அடுக்குக் குவியல்
+
+📌 Meaning (simple)
+
+👉 Function உள்ளே declare பண்ணும் variables போகும் இடம்
+
+Example
+void func() {
+    int x;
+    char name[50];
+}
+
+
+👉 x, name → STACK-ல் இருக்கும்
+
+Stack எப்படி வேலை செய்கிறது?
+
+Function call ஆனதும் → memory allocate
+
+Function முடிந்ததும் → memory auto free
+
+💡 Programmer எதுவும் செய்ய வேண்டாம்
+
+Stack characteristics
+விஷயம்	Stack
+Memory type	Automatic
+Allocate	OS
+Free	Auto
+Speed	Fast
+Size	Limited
+Control	Compiler
+Stack analogy 🧠
+
+🧱 பிளேட் அடுக்கி வைத்திருக்கும் ஸ்டாண்ட்
+
+மேலிருந்து மட்டும் எடுக்க முடியும்
+
+மேலே வைச்சது முதலில் வெளியே வரும்
+
+(LIFO – Last In First Out)
+
+🟩 HEAP (ஹீப்)
+📌 தமிழ் விளக்கம்
+
+Heap = குவிக்கப்பட்ட இடம் / தளர்வான நினைவகப் பகுதி
+
+(சரியான தமிழ் வார்த்தை இல்லை – இதுதான் closest)
+
+Meaning (simple)
+
+👉 Programmer கேட்டு வாங்கும் memory
+👉 malloc() மூலம்
+
+Example
+char *p = malloc(10);
+
+
+👉 10 bytes → HEAP-ல் allocate
+
+Heap எப்படி வேலை செய்கிறது?
+
+Programmer memory கேட்கிறான்
+
+OS heap-ல இடம் கொடுக்குது
+
+Programmer தான் free() பண்ணணும்
+
+Heap characteristics
+விஷயம்	Heap
+Memory type	Manual
+Allocate	malloc
+Free	free
+Speed	Slow
+Size	Large
+Control	Programmer
+Heap analogy 🧠
+
+🏠 வாடகைக்கு எடுத்த வீடு
+
+நீயே வாங்குறாய்
+
+நீயே காலி பண்ணணும்
+
+மறந்தா → பிரச்சினை (memory leak)
+
+🔥 Stack vs Heap (side-by-side)
+Feature	Stack	Heap
+Declare	int a;	malloc()
+Lifetime	Function scope	Until free
+Free	Auto	Manual
+Use	Temp variables	Dynamic data
+Danger	Stack overflow	Memory leak
+🔴 Real example (lock this)
+void f() {
+    char name[50];     // STACK
+    char *p = malloc(50); // HEAP
+}
+
+
+When f() ends:
+
+name → ❌ gone
+
+p → ❌ pointer gone, but heap memory still alive
+
+👉 If no free(p) → memory leak
+
+🧠 Why YOU must know this (important for you)
+
+C bugs
+
+Crashes
+
+Security vulnerabilities
+
+Exploits
+
+Kernel programming
+
+👉 All rooted in stack / heap misuse
+
+One-line takeaway 🔒
+
+Stack = automatic temporary memory
+Heap = manual long-term memory
+
+Ultra-simple Tamil summary
+
+Stack → தற்காலிக நினைவகம் (function முடிந்ததும் போகும்)
+
+Heap → கேட்டு வாங்கும் நினைவகம் (நீ free பண்ணணும்)
+
+========x=================x================x=====================
+
+சரியான கேள்வி 👍
+Short answer: ❌ malloc மட்டும் தான் heap உருவாக்கும் என்று இல்லை.
+Heap memory ஏற்கனவே OS கொடுத்திருக்கும்; malloc அதை பயன்படுத்தும் ஒரு வழி மட்டும்.
+
+இப்போ clear-ஆ, step-by-step Tamil-ல சொல்லறேன்.
+
+முதலில் முக்கியமான correction 🔴
+
+❌ malloc heap-ஐ “உருவாக்காது”
+✅ Heap memory ஏற்கனவே OS-ல இருக்கும்
+✅ malloc அந்த heap-ல இருந்து ஒரு பகுதியை allocate பண்ணும்
+
+Heap memory யார் உருவாக்குறாங்க?
+
+👉 Operating System (OS)
+Program start ஆகும்போதே:
+
+Program memory:
+CODE | GLOBAL | STACK | HEAP
+
+
+👉 Heap already ready ✔
+👉 Programmer create பண்ண வேண்டியதில்லை
+
+Heap-ல memory பெறும் வழிகள் (C-ல்)
+✅ 1️⃣ malloc()
+p = malloc(100);
+
+
+Heap-ல 100 bytes
+
+Garbage values
+
+✅ 2️⃣ calloc()
+p = calloc(10, sizeof(int));
+
+
+Heap-ல memory
+
+Zero-initialized
+
+✅ 3️⃣ realloc()
+p = realloc(p, 200);
+
+
+Existing heap block-ஐ resize பண்ணும்
+
+👉 மூன்றும் heap-ல தான் memory கொடுக்கும்
+
+❓ malloc இல்லாம heap-ஐ use பண்ண முடியுமா?
+User-level C program-ல ❌
+
+malloc / calloc / realloc இல்லாம
+
+Heap memory safe-ஆ manage பண்ண முடியாது
+
+Low-level (advanced)
+
+brk(), sbrk() (old)
+
+mmap() (modern)
+
+👉 OS / libc internal use
+👉 Normal C programmer use பண்ண கூடாது
+
+Example (compare)
+Stack (no heap)
+char a[50];   // stack
+
+Heap (with malloc)
+char *p = malloc(50);
+
+Very important rule 🔒
+
+Heap memory = long life
+Stack memory = short life
+
+Common misunderstanding (clear it now)
+Thought	Reality
+malloc heap உருவாக்கும்	❌
+heap OS உருவாக்கும்	✅
+malloc heap-ஐ manage பண்ணும்	✅
+Simple analogy 🧠
+
+OS = land owner 🏞️
+
+Heap = empty land
+
+malloc = land-ல plot book பண்ணுவது
+
+free = plot-ஐ return பண்ணுவது
+
+One-line takeaway (lock this)
+
+Heap OS-ல இருந்தே இருக்கும்; malloc அதை allocate மட்டும் செய்கிறது.
