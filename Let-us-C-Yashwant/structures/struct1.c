@@ -2,13 +2,13 @@
  
  int main()
  {
-    struct book
+    struct book //declaration of structure
     {
-        char name;
+        char name;//only work in one charater like A,B,C
         float price;
         int pages;
     };
-    struct book b1,b2,b3;
+    struct book b1,b2,b3;//structure variable create
 
     printf("Enter names ,price & no.of pages of books\n");
     scanf(" %c %f %d",&b1.name,&b1.price,&b1.pages);
