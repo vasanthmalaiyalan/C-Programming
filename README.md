@@ -10,3 +10,5 @@ Warning details :
 `gcc -std=c17 -Wall -Wextra -Werror -pedantic file.c`
 
 `gcc -Wall -Wextra -Wpedantic file.c`
+
+lets start.............
