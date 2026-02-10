@@ -1,17 +1,16 @@
-#include <stdio.h>
-
+#include<stdio.h>
 int main(void)
 {
     int ch;
-    printf("continue (y/n): ");
-    ch = getchar(); //read one char from keyboard only read in keyboard
-    if(ch=='y' || ch =='y')
-       printf("you chose YES\n");
-    else 
-       printf("You chose NO\n");
-       
-    return 0;   
+    printf("Continue (y/n): ");
+    ch=fgetc(stdin); //read from explicityly keyboard like fgetc(stdin) and file like just add fgetc()
 
+    if(ch=='y'||ch=='y')
+        printf("you chose yes\n");
+        else
+        printf("You chose No\n");
+    
+    return 0;
 }
 
 /*
@@ -63,9 +62,7 @@ fgetc(stdin) keyboard input-க்கு,
 fgetc(file) file input-க்கு.
 நீங்க சொன்னது சரி.
 */
-
-//============x============x============x=================
-
+//===========x==================x==============x===========
 /*
 ஆம் 👍 உங்கள் கேள்விக்கு short & accurate answer:
 getchar() மற்றும் fgetc(stdin) — இரண்டும் ஒரே வேலை தான் செய்கிறது.

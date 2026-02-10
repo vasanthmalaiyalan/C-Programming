@@ -258,3 +258,84 @@ Escape sequences = \ + special meaning character
 Quotes & backslash print பண்ண escape தேவை
 
 printf() type mismatch sometimes useful, sometimes dangerous
+
+======x==============x================x===========x=========
+
+ஆம் 👍 உங்கள் கேள்விக்கு short & accurate answer:
+getchar() மற்றும் fgetc(stdin) — இரண்டும் ஒரே வேலை தான் செய்கிறது.
+
+ஆனா ஏன் இரண்டு functions இருக்கிறது, எங்கு எது பயன்படுத்தணும்ன்னு தெளிவாகப் புரிய, கீழே clean-ஆ explain பண்றேன்.
+
+🔵 1. getchar() என்ன?
+int ch = getchar();
+
+
+Standard C function / macro
+
+stdin (keyboard)-லிருந்து ஒரு character read பண்ணும்
+
+Enter (\n) press பண்ணினாலும் அதையும் character-ஆ read பண்ணும்
+
+Simple, readable
+
+👉 stdin-only shortcut
+
+🔵 2. fgetc(stdin) என்ன?
+int ch = fgetc(stdin);
+
+
+Standard C function
+
+எந்த FILE stream-லிருந்தும் character read பண்ணும்
+
+stdin கொடுத்தால் keyboard-லிருந்து read பண்ணும்
+
+👉 General-purpose version
+
+✅ Core truth (important)
+
+getchar() ≡ fgetc(stdin)
+
+Conceptually:
+
+getchar()  →  fgetc(stdin)
+
+
+Behavior same
+
+Buffer handling same
+
+Enter (\n) handling same
+
+🧠 Difference only in DESIGN, not behavior
+Point	getchar()	fgetc(stdin)
+Stream	stdin only	any FILE*
+Simplicity	very simple	more explicit
+Extensibility	low	high
+Standard	yes	yes
+🔍 Why both exist then?
+
+getchar() → convenience
+
+fgetc() → flexibility
+
+Library designers thought:
+
+“stdin-ல மட்டும் read வேண்டும்னா shortcut கொடுப்போம்,
+any stream-க்கு generic function கொடுப்போம்.”
+
+⚠️ Important note (type)
+
+Always use int, not char:
+
+int ch = getchar();   // correct
+
+
+Why?
+
+EOF (-1) detect பண்ணணும்
+
+🏁 Final one-line answer (lock this 🔒)
+
+ஆம் — getchar() மற்றும் fgetc(stdin) ஒரே வேலை தான் செய்கிறது.
+Difference behavior-ல் இல்லை, design & flexibility-ல தான்.
