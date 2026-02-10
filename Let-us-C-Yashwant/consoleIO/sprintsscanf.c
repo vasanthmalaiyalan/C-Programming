@@ -10,14 +10,15 @@ char str[20];
 
 printf("Before sprintf:\n");
 printf("%d %c %f\n",i,ch,(double)a);
-sprintf(str,"%d %c %f",i,ch,(double)a);// sprintf only write in memory not screen ok
+sprintf(str,"%d %c %f",i,ch,(double)a);// sprintf only write in memory convert that variable to string 
 printf("\nString after sprintf:\n");
 printf("%s\n",str);
 // change values to prove sscanf works
     i = 0;
     ch = '?';
     a = 0.0;
-    sscanf(str, "%d %c %f", &i, &ch, &a);
+    printf("Before sscanf: i=%d ch=%c a=%f\n",i,ch,(double)a);
+    sscanf(str, "%d %c %f", &i, &ch, &a);// sscanf string to overight the variable
 
     printf("\nAfter sscanf (values read from string):\n");
     printf("i=%d ch=%c a=%f\n", i, ch, (double)a);
@@ -92,4 +93,78 @@ sprintf(str, "%f", 123456.789);
 
 ✅ Safe version
 snprintf(str, sizeof(str), "%f", 123456.789);
+*/
+
+//=========x===========x=============x============x=====
+
+/*
+sscanf() எப்படி வேலை செய்கிறது?
+sscanf(str, "%d %c %f", &i, &ch, &a);
+
+
+இதன் அர்த்தம்:
+
+str-ல இருந்து
+
+%d → integer read
+
+%c → character read
+
+%f → float read
+
+அந்த values-ஐ நேரடியாக i, ch, a-க்குள் write பண்ணு
+
+👉 Old value erase
+👉 New value store
+
+🧠 Step-by-step example (no confusion)
+Before sscanf
+i = 0;
+ch = '?';
+a = 0.0;
+
+
+Memory:
+
+i=0   ch=?   a=0.0
+
+sscanf call
+str = "10 A 3.14";
+sscanf(str, "%d %c %f", &i, &ch, &a);
+
+After sscanf
+
+Memory:
+
+i=10  ch=A  a=3.14
+
+
+👉 இதுதான் print ஆகும்
+
+🔴 Why confusion happened?
+
+நீங்க நினைத்தது:
+
+“sscanf old value-ஐ reuse பண்ணுதா?”
+
+ஆனா உண்மை:
+
+sscanf-க்கு old value irrelevant
+அது string தான் source of truth
+
+🔍 Very important comparison
+Function	Source of data
+printf	variables
+sprintf	variables → string
+sscanf	string → variables
+
+👉 sscanf variables-லிருந்து print செய்யாது
+👉 அது string-லிருந்து read செய்து write செய்யும்
+
+🏁 One-line final answer (lock this 🔒)
+
+இல்லை. sscanf முன்னாடி இருந்த value-யை print செய்யாது.
+அது string-ல இருக்கும் value-யை
+variables-க்கு overwrite தான் செய்யும்.
+Print ஆகுவது printf call நேரத்திலுள்ள current value.
 */
