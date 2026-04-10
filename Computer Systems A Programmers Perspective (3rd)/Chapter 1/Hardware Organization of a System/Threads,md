@@ -1,0 +1,371 @@
+# 1.7.2 Threads
+
+## Core idea
+
+Normally process = single control flow. ஆனா modern systems-ல ஒரு process **multiple execution units** — threads — contain பண்ணலாம்.
+
+```
+Process (single thread):        Process (multi thread):
+
+[code][data][stack]             [code][data]  ← shared
+      ↓                         [stack1][stack2][stack3]
+  one flow                       ↑       ↑       ↑
+                               thread1 thread2 thread3
+                               (each has own execution flow)
+```
+
+---
+
+## Thread என்னது
+
+**Thread** = process-ரோட context-ல run ஆகுற execution unit. Same process-ல இருக்கற threads:
+- Same **code** share பண்றது
+- Same **global data** share பண்றது
+- Own **execution context** வச்சிருக்கும் (own PC, register values)
+
+---
+
+## ஏன் threads important — book சொல்ற 3 reasons
+
+**1. Network servers-ல concurrency தேவை**
+Multiple clients simultaneously handle பண்ண threads தேவை.
+
+**2. Threads-க்கிடையே data share பண்றது easier**
+Multiple processes-க்கிடையே share பண்றதை விட, same process-ல இருக்கற threads directly shared memory access பண்ணலாம்.
+
+**3. Threads typically more efficient than processes**
+New process create பண்றதை விட new thread create பண்றது lighter — less overhead.
+
+**Bonus:** Multiple processors available-ஆ இருந்தா multi-threading programs faster-ஆ run ஆகும் (Section 1.9.2-ல cover ஆகும்).
+
+---
+
+## Figure 1.13 — Process Virtual Address Space
+
+Book இந்த section-ல virtual address space diagram காட்டுது — இது 1.7.3-க்கு bridge:
+
+![alt text](image-9.png)
+---
+
+## Book-ரோட note
+
+Chapter 12-ல concurrency basic concepts + threaded programs எழுதுவது எப்படி னு learn ஆகும்.
+
+அடுத்து 1.7.3 (Virtual Memory) போகலாமா?
+
+----------
+
+சரி 🔥 இப்போ **CS:APP 1.7.2 — Threads**
+👉 book சொல்ற flow மட்டும்
+👉 **deep mental model + clarity (no extra topics)**ல explain பண்ணலாம்
+
+---
+
+# 🧠 0. ONE CORE IDEA (இந்த section essence)
+
+```text
+Thread = process உள்ளே இருக்கும் execution unit
+```
+
+👉 Process → container
+👉 Thread → execution flow 🔥
+
+---
+
+# 🎯 1. Traditional vs Modern View
+
+Book சொல்றது:
+
+> normally process = single control flow
+
+---
+
+## 🧠 Old model
+
+```text
+Process → one thread
+```
+
+👉 single execution path
+
+---
+
+## 🚀 Modern model
+
+```text
+Process → multiple threads
+```
+
+👉 multiple execution flows
+
+---
+
+# 🧩 2. What is a Thread (Deep)
+
+```text
+Thread = independent execution path
+        inside same process
+```
+
+---
+
+## 🔥 Key idea
+
+👉 same processல multiple threads:
+
+* same code
+* same global data
+
+---
+
+## 🧠 Visual model
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2Aa2Y0W6gfuT_MZGJXQ1cP3g.png)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2A3o1bcCDJvR00m7f-6Fca2Q.png)
+
+![Image](https://media2.dev.to/dynamic/image/width%3D1600%2Cheight%3D900%2Cfit%3Dcover%2Cgravity%3Dauto%2Cformat%3Dauto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fpsmqrhi1kho4od6q1y8z.png)
+
+![Image](https://i.sstatic.net/xAPl5.jpg)
+
+---
+
+## 💥 Structure
+
+```text
+Process:
+   Code (shared)
+   Data (shared)
+   Heap (shared)
+
+   Thread 1 → own execution
+   Thread 2 → own execution
+   Thread 3 → own execution
+```
+
+---
+
+# ⚡ 3. “Running in context of process” (VERY IMPORTANT)
+
+Book சொல்றது:
+
+> threads run in context of process
+
+---
+
+## 🧠 Deep meaning
+
+👉 Thread தனியா process இல்ல
+👉 அது process resources use பண்ணும்
+
+---
+
+## 🔥 Insight
+
+```text
+Thread ≠ independent world
+Thread = inside process world
+```
+
+---
+
+# 🔁 4. Control flow (Core concept)
+
+👉 Processல:
+
+```text
+Thread 1 → instruction flow
+Thread 2 → instruction flow
+```
+
+---
+
+## 🧠 Meaning
+
+👉 multiple instruction streams
+
+```text
+T1: A → B → C
+T2: X → Y → Z
+```
+
+👉 interleaving / parallel
+
+---
+
+# 💥 5. Why threads? (Book reasons)
+
+---
+
+## 🟢 1. Concurrency
+
+👉 network servers:
+
+```text
+multiple requests handle
+```
+
+---
+
+## 🔵 2. Easier data sharing
+
+👉 threads:
+
+```text
+same memory → easy sharing
+```
+
+👉 processes:
+
+```text
+separate memory → hard
+```
+
+---
+
+## 🟡 3. Efficiency
+
+👉 thread:
+
+```text
+lightweight
+```
+
+👉 process:
+
+```text
+heavy (context switch costly)
+```
+
+---
+
+## 🔴 4. Parallelism (multi-core)
+
+👉 multiple CPU இருந்தா:
+
+```text
+threads → true parallel execution
+```
+
+---
+
+# ⚙️ 6. Threads vs Processes (Deep clarity)
+
+| Feature       | Process   | Thread  |
+| ------------- | --------- | ------- |
+| Memory        | separate  | shared  |
+| Creation cost | high      | low     |
+| Switching     | expensive | cheaper |
+| Data sharing  | hard      | easy    |
+
+---
+
+# 🧠 7. Key internal structure
+
+👉 Process memory:
+
+```text
+Code
+Global data
+Heap
+```
+
+👉 Thread:
+
+```text
+Own stack
+Own execution (PC, registers)
+```
+
+---
+
+## 💥 Insight
+
+```text
+Shared:
+   code + data
+
+Private:
+   stack + execution state
+```
+
+---
+
+# 🚀 8. Performance idea (Book hint)
+
+👉 Threads faster because:
+
+```text
+Less overhead
++ shared memory
+```
+
+---
+
+# 🧠 9. Final deep mental model
+
+```text
+Process =
+   container (code + data)
+
+Thread =
+   execution unit inside container
+
+Multiple threads →
+   multiple control flows
+   sharing same memory
+```
+
+---
+
+# 💣 10. Ultimate truths
+
+```text
+Thread = lightweight process
+
+Process = isolation
+Thread = sharing + speed
+
+Concurrency:
+   threads interleave
+
+Parallel:
+   threads run simultaneously (multi-core)
+```
+
+---
+
+# 🔥 FINAL SUMMARY (Book flow)
+
+```text
+Process can have multiple threads
+
+Each thread:
+   runs independently
+   shares code & data
+
+Advantages:
+   concurrency
+   easy sharing
+   efficiency
+   parallelism
+```
+
+---
+
+இப்போ நீ 1.7.1 + 1.7.2 combine பண்ணினா:
+
+👉 Process = abstraction
+👉 Thread = execution inside process
+
+👉 இது தான் modern systems core 🔥
+
+---
+
+👉 next deep dive readyனா:
+
+* Thread scheduling எப்படி நடக்குது
+* Race condition (🔥 super important)
+* Lock, mutex எப்படி வேலை செய்கிறது
+
+எதை next? 😎
